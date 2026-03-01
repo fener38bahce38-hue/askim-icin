@@ -88,9 +88,24 @@ pointer-events:none;
 </head>
 
 <body>
-  <audio autoplay loop>
+  <audio id="bgMusic" loop>
 <source src="muzik.mp3" type="audio/mpeg">
 </audio>
+
+<button id="musicBtn" 
+style="
+position:fixed;
+top:20px;
+right:20px;
+z-index:999;
+padding:10px 15px;
+border:none;
+border-radius:20px;
+background:#ff2e63;
+color:white;
+cursor:pointer;">
+🎵 Müziği Başlat
+</button>
 
 <h1>💖 Bizim En Güzel Anılarımız 💖</h1>
 
