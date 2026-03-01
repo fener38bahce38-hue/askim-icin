@@ -3,104 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bizim Hikayemiz ❤️</title>
+<title>Bizim Anılarımız ❤️</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 
 body{
-height:100vh;
+background:#111;
+color:white;
+overflow-x:hidden;
+text-align:center;
+padding:30px;
+}
+
+/* Başlık */
+h1{
+margin-bottom:30px;
+font-size:32px;
+}
+
+/* Grid galeri */
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+max-width:1000px;
+margin:auto;
+}
+
+/* Foto kart */
+.card{
+position:relative;
+overflow:hidden;
+border-radius:20px;
+cursor:pointer;
+}
+
+.card img{
+width:100%;
+height:350px;
+object-fit:cover;
+transition:0.5s;
+}
+
+.card:hover img{
+transform:scale(1.1);
+}
+
+/* Üst yazı */
+.overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
 display:flex;
 justify-content:center;
 align-items:center;
-overflow:hidden;
-color:white;
+opacity:0;
+transition:0.5s;
+padding:20px;
 text-align:center;
 }
 
-.background{
+.card.active .overlay{
+opacity:1;
+}
+
+/* Kalpler */
+.heart{
 position:fixed;
-width:100%;
-height:100%;
-background:url("askim.jpg") center/cover no-repeat;
-filter:blur(8px) brightness(0.5);
-z-index:-1;
+font-size:20px;
+animation:floatUp 6s linear infinite;
+opacity:0.8;
+pointer-events:none;
 }
 
-.container{
-backdrop-filter:blur(15px);
-background:rgba(255,255,255,0.15);
-padding:40px;
-border-radius:25px;
-box-shadow:0 0 40px rgba(0,0,0,0.4);
-width:320px;
-}
-
-h1{
-margin-bottom:20px;
-}
-
-input{
-padding:10px;
-border:none;
-border-radius:10px;
-width:100%;
-margin-top:10px;
-}
-
-button{
-margin-top:15px;
-padding:10px;
-border:none;
-border-radius:20px;
-background:white;
-color:#ff1e56;
-font-weight:bold;
-cursor:pointer;
-width:100%;
-}
-
-button:hover{
-transform:scale(1.05);
-}
-
-.shake{
-animation:shake 0.3s;
-}
-
-@keyframes shake{
-0%{transform:translateX(0);}
-25%{transform:translateX(-5px);}
-50%{transform:translateX(5px);}
-75%{transform:translateX(-5px);}
-100%{transform:translateX(0);}
+@keyframes floatUp{
+0%{transform:translateY(100vh) scale(0.5);opacity:1;}
+100%{transform:translateY(-10vh) scale(1.2);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="background"></div>
+<h1>💖 Bizim En Güzel Anılarımız 💖</h1>
 
-<div class="container" id="box">
-<h1>❤️ Gizli Alan ❤️</h1>
-<p>Şifreyi gir aşkım 💖</p>
-<input type="password" id="password" placeholder="Şifre">
-<button onclick="checkPassword()">Giriş Yap</button>
+<div class="gallery">
+
+<div class="card" onclick="toggle(this)">
+<img src="1.JPG">
+<div class="overlay">Bu gün hayatımın en mutlu günüydü ❤️</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="2.JPG">
+<div class="overlay">Seninle her yer cennet 💖</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="3.JPG">
+<div class="overlay">Gülüşün dünyamı aydınlatıyor ✨</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="4.JPG">
+<div class="overlay">En güzel anım seninle olan 💕</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="5.jpg">
+<div class="overlay">Her şey seninle anlamlı ❤️</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="6.JPG">
+<div class="overlay">Sonsuza kadar elini bırakmayacağım 💍</div>
+</div>
+
 </div>
 
 <script>
-function checkPassword(){
-const pass=document.getElementById("password").value;
-const box=document.getElementById("box");
+function toggle(card){
+card.classList.toggle("active");
+}
 
-if(pass==="26102025"){
-window.location.href="galeri.html";
-}else{
-box.classList.add("shake");
-setTimeout(()=>box.classList.remove("shake"),300);
+/* Uçan kalpler */
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+15)+"px";
+heart.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
 }
-}
+setInterval(createHeart,400);
 </script>
 
 </body>
