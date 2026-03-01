@@ -6,142 +6,257 @@
 <title>Bizim Hikayemiz ❤️</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: 'Segoe UI', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 
 body{
-    height:100vh;
-    background: linear-gradient(135deg,#ff4e8a,#ff1e56,#ff7aa2);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-    color:white;
-    text-align:center;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+color:white;
+text-align:center;
+transition:1s;
 }
 
-/* Kalp animasyon */
-.heart{
-    position:absolute;
-    font-size:20px;
-    animation: floatUp 6s linear infinite;
-    opacity:0.8;
+/* Arka plan */
+.background{
+position:fixed;
+width:100%;
+height:100%;
+background:url("askim.jpg") center/cover no-repeat;
+filter:blur(8px) brightness(0.6);
+z-index:-1;
+transition:1s;
 }
 
-@keyframes floatUp{
-    0%{
-        transform:translateY(100vh) scale(0.5);
-        opacity:1;
-    }
-    100%{
-        transform:translateY(-10vh) scale(1.2);
-        opacity:0;
-    }
+/* Final arka plan efekti */
+body.romantic-mode .background{
+filter:blur(3px) brightness(0.8);
+transform:scale(1.1);
 }
 
-/* Cam efekt kutu */
+/* Container */
 .container{
-    backdrop-filter: blur(15px);
-    background: rgba(255,255,255,0.15);
-    padding:40px;
-    border-radius:25px;
-    box-shadow:0 0 40px rgba(0,0,0,0.3);
-    animation: fadeIn 2s ease-in-out;
+backdrop-filter:blur(15px);
+background:rgba(255,255,255,0.15);
+padding:40px;
+border-radius:25px;
+box-shadow:0 0 40px rgba(0,0,0,0.4);
+max-width:500px;
+animation:fadeIn 2s ease;
 }
 
 @keyframes fadeIn{
-    from{opacity:0; transform:scale(0.8);}
-    to{opacity:1; transform:scale(1);}
+from{opacity:0;transform:scale(0.8);}
+to{opacity:1;transform:scale(1);}
 }
 
 h1{
-    font-size:45px;
-    margin-bottom:20px;
-    animation: pulse 2s infinite;
+font-size:40px;
+margin-bottom:20px;
+animation:pulse 2s infinite;
 }
 
 @keyframes pulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.1);}
-    100%{transform:scale(1);}
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
 }
 
-#counter{
-    font-size:22px;
-    margin-bottom:20px;
-}
-
-.love-text{
-    font-size:20px;
-    margin-top:10px;
-}
+#counter{font-size:18px;margin-bottom:20px;}
 
 button{
-    margin-top:20px;
-    padding:12px 25px;
-    border:none;
-    border-radius:30px;
-    background:white;
-    color:#ff1e56;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
+margin-top:10px;
+padding:10px 20px;
+border:none;
+border-radius:25px;
+background:white;
+color:#ff1e56;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
 }
 
-button:hover{
-    transform:scale(1.1);
-    background:#ffe3ec;
+button:hover{transform:scale(1.1);background:#ffe3ec;}
+
+/* Modal kutular */
+.box{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:white;
+color:#333;
+padding:25px;
+border-radius:20px;
+width:340px;
+box-shadow:0 0 30px rgba(0,0,0,0.5);
+transition:0.4s;
+z-index:10;
 }
+
+.active{transform:translate(-50%,-50%) scale(1);}
+
+.close{
+margin-top:10px;
+background:#ff1e56;
+color:white;
+}
+
+/* Shake */
+.shake{animation:shake 0.3s;}
+@keyframes shake{
+0%{transform:translate(-50%,-50%) translateX(0);}
+25%{transform:translate(-50%,-50%) translateX(-5px);}
+50%{transform:translate(-50%,-50%) translateX(5px);}
+75%{transform:translate(-50%,-50%) translateX(-5px);}
+100%{transform:translate(-50%,-50%) translateX(0);}
+}
+
+/* Kalpler */
+.heart{
+position:absolute;
+font-size:20px;
+animation:floatUp 6s linear infinite;
+opacity:0.8;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(100vh) scale(0.5);opacity:1;}
+100%{transform:translateY(-10vh) scale(1.2);opacity:0;}
+}
+
+/* Konfeti */
+.confetti{
+position:absolute;
+width:8px;
+height:8px;
+background:red;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+to{transform:translateY(100vh) rotate(720deg);opacity:0;}
+}
+
+/* Final mesaj */
+.finalMessage{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+color:white;
+font-size:28px;
+text-shadow:0 0 20px #ff1e56;
+transition:0.5s;
+z-index:20;
+}
+
+.showFinal{transform:translate(-50%,-50%) scale(1.2);}
 </style>
 </head>
 
 <body>
 
+<div class="background"></div>
+
 <div class="container">
-    <h1>❤️ Aşkım ❤️</h1>
-    <div id="counter"></div>
-    <div class="love-text">Seni her şeyden çok seviyorum 💖</div>
-    <button onclick="alert('Sonsuza kadar seninleyim ❤️')">Sonsuza Kadar 💍</button>
+<h1>❤️ Aşkım ❤️</h1>
+<div id="counter"></div>
+<button onclick="openLetter()">Aşk Mektubu 💌</button>
+<button onclick="openSecret()">Gizli Sürpriz 🔐</button>
 </div>
 
+<!-- Mektup -->
+<div class="box" id="letter">
+<h2>💖 Sana Mesajım 💖</h2>
+<p>Sen hayatımın en güzel gerçeğisin. Seni sonsuza kadar seveceğim ❤️</p>
+<button class="close" onclick="closeLetter()">Kapat</button>
+</div>
+
+<!-- Şifre -->
+<div class="box" id="secretBox">
+<h3>Şifreyi Gir 🔐</h3>
+<input type="password" id="secretInput" placeholder="Şifre">
+<br>
+<button onclick="checkSecret()">Gönder</button>
+<button class="close" onclick="closeSecret()">Kapat</button>
+<p id="secretMessage" style="margin-top:10px;color:#ff1e56;"></p>
+</div>
+
+<div class="finalMessage" id="finalMessage">
+💖 SEN BENİM SONSUZA KADARIMSIN 💖
+</div>
+
+<audio autoplay loop>
+<source src="muzik.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-// Çıkmaya başlama tarihi (26 Ekim 2025)
-const startDate = new Date("2025-10-26T00:00:00");
+const startDate=new Date("2025-10-26T00:00:00");
 
 function updateCounter(){
-    const now = new Date();
-    const diff = now - startDate;
-
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff / (1000*60*60)) % 24);
-    const minutes = Math.floor((diff / (1000*60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-
-    document.getElementById("counter").innerHTML =
-        `Birlikte ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye ❤️`;
+const now=new Date();
+const diff=now-startDate;
+const d=Math.floor(diff/(1000*60*60*24));
+const h=Math.floor((diff/(1000*60*60))%24);
+const m=Math.floor((diff/(1000*60))%60);
+const s=Math.floor((diff/1000)%60);
+document.getElementById("counter").innerHTML=
+`Birlikte ${d} gün ${h} saat ${m} dakika ${s} saniye ❤️`;
 }
-
 setInterval(updateCounter,1000);
 updateCounter();
 
-// Uçan kalpler
+/* Kalpler */
+let heartInterval=setInterval(createHeart,300);
 function createHeart(){
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random()*100 + "vw";
-    heart.style.fontSize = (Math.random()*20 + 15) + "px";
-    heart.style.animationDuration = (Math.random()*3 + 3) + "s";
-    document.body.appendChild(heart);
-
-    setTimeout(()=>{ heart.remove(); },6000);
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+15)+"px";
+heart.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
 }
 
-setInterval(createHeart,300);
+/* Konfeti */
+function launchConfetti(){
+for(let i=0;i<150;i++){
+const conf=document.createElement("div");
+conf.classList.add("confetti");
+conf.style.left=Math.random()*100+"vw";
+conf.style.background=`hsl(${Math.random()*360},100%,50%)`;
+document.body.appendChild(conf);
+setTimeout(()=>conf.remove(),3000);
+}
+}
+
+/* Modals */
+function openLetter(){document.getElementById("letter").classList.add("active");}
+function closeLetter(){document.getElementById("letter").classList.remove("active");}
+function openSecret(){document.getElementById("secretBox").classList.add("active");}
+function closeSecret(){document.getElementById("secretBox").classList.remove("active");}
+
+/* Şifre kontrol */
+function checkSecret(){
+const value=document.getElementById("secretInput").value;
+const box=document.getElementById("secretBox");
+
+if(value==="26102025"){
+document.body.classList.add("romantic-mode");
+launchConfetti();
+clearInterval(heartInterval);
+heartInterval=setInterval(createHeart,100);
+document.getElementById("finalMessage").classList.add("showFinal");
+}else{
+box.classList.add("shake");
+setTimeout(()=>box.classList.remove("shake"),300);
+document.getElementById("secretMessage").innerHTML="Yanlış şifre 😈";
+}
+}
 </script>
 
 </body>
