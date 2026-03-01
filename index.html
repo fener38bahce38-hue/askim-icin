@@ -7,192 +7,141 @@
 
 <style>
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family: 'Segoe UI', sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 body{
-background:black;
-color:white;
-overflow:hidden;
-text-align:center;
+    height:100vh;
+    background: linear-gradient(135deg,#ff4e8a,#ff1e56,#ff7aa2);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    color:white;
+    text-align:center;
 }
 
-#intro{
-position:fixed;
-width:100%;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:2rem;
-background:black;
-animation:fadeOut 4s forwards;
+/* Kalp animasyon */
+.heart{
+    position:absolute;
+    font-size:20px;
+    animation: floatUp 6s linear infinite;
+    opacity:0.8;
 }
 
-@keyframes fadeOut{
-0%{opacity:1;}
-80%{opacity:1;}
-100%{opacity:0;visibility:hidden;}
+@keyframes floatUp{
+    0%{
+        transform:translateY(100vh) scale(0.5);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-10vh) scale(1.2);
+        opacity:0;
+    }
 }
 
-.slideshow{
-position:absolute;
-width:100%;
-height:100vh;
-overflow:hidden;
-z-index:-1;
+/* Cam efekt kutu */
+.container{
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.15);
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 0 40px rgba(0,0,0,0.3);
+    animation: fadeIn 2s ease-in-out;
 }
 
-.slide{
-position:absolute;
-width:100%;
-height:100%;
-background-size:cover;
-background-position:center;
-animation:fade 24s infinite;
-}
-
-.slide img{
-width:100%;
-height:100%;
-object-fit:cover;
-animation:zoom 12s infinite alternate;
-}
-
-@keyframes fade{
-0%{opacity:0;}
-5%{opacity:1;}
-30%{opacity:1;}
-35%{opacity:0;}
-100%{opacity:0;}
-}
-
-@keyframes zoom{
-from{transform:scale(1);}
-to{transform:scale(1.1);}
-}
-
-.content{
-position:relative;
-top:35%;
-z-index:2;
+@keyframes fadeIn{
+    from{opacity:0; transform:scale(0.8);}
+    to{opacity:1; transform:scale(1);}
 }
 
 h1{
-font-size:3rem;
-animation:shake 0.5s ease;
+    font-size:45px;
+    margin-bottom:20px;
+    animation: pulse 2s infinite;
 }
 
-@keyframes shake{
-0%{transform:translateX(0);}
-25%{transform:translateX(-5px);}
-50%{transform:translateX(5px);}
-75%{transform:translateX(-5px);}
-100%{transform:translateX(0);}
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+    100%{transform:scale(1);}
 }
 
-.counter{
-margin-top:20px;
-font-size:1.5rem;
+#counter{
+    font-size:22px;
+    margin-bottom:20px;
 }
 
-.secret{
-margin-top:20px;
+.love-text{
+    font-size:20px;
+    margin-top:10px;
 }
 
-.secret input{
-padding:10px;
-border:none;
-border-radius:5px;
+button{
+    margin-top:20px;
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#ff1e56;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-.secret button{
-padding:10px;
-border:none;
-border-radius:5px;
-cursor:pointer;
-background:red;
-color:white;
-}
-
-.footer{
-position:absolute;
-bottom:20px;
-width:100%;
-font-size:1rem;
-opacity:0.8;
+button:hover{
+    transform:scale(1.1);
+    background:#ffe3ec;
 }
 </style>
 </head>
 
 <body>
 
-<div id="intro">
-Seninle başlayan en güzel hikaye ❤️
+<div class="container">
+    <h1>❤️ Aşkım ❤️</h1>
+    <div id="counter"></div>
+    <div class="love-text">Seni her şeyden çok seviyorum 💖</div>
+    <button onclick="alert('Sonsuza kadar seninleyim ❤️')">Sonsuza Kadar 💍</button>
 </div>
-
-<div class="slideshow">
-<div class="slide" style="animation-delay:0s"><img src="1.JPG"></div>
-<div class="slide" style="animation-delay:4s"><img src="2.JPG"></div>
-<div class="slide" style="animation-delay:8s"><img src="3.JPG"></div>
-<div class="slide" style="animation-delay:12s"><img src="4.JPG"></div>
-<div class="slide" style="animation-delay:16s"><img src="5.JPG"></div>
-<div class="slide" style="animation-delay:20s"><img src="6.JPG"></div>
-</div>
-
-<div class="content">
-<h1>❤️ Aşkım ❤️</h1>
-
-<div class="counter" id="counter"></div>
-
-<div class="secret">
-<input type="text" id="nameInput" placeholder="İsmini yaz...">
-<button onclick="checkName()">Gönder</button>
-</div>
-
-<div id="hiddenMessage" style="display:none; margin-top:20px; font-size:1.2rem;">
-Seni her şeyden çok seviyorum ❤️
-</div>
-
-</div>
-
-<div class="footer">
-İyi ki hayatımdasın 💖
-</div>
-
-<audio autoplay loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
 
 <script>
+// Çıkmaya başlama tarihi (26 Ekim 2025)
 const startDate = new Date("2025-10-26T00:00:00");
 
 function updateCounter(){
-const now = new Date();
-const diff = now - startDate;
+    const now = new Date();
+    const diff = now - startDate;
 
-const days = Math.floor(diff / (1000*60*60*24));
-const hours = Math.floor((diff / (1000*60*60)) % 24);
-const minutes = Math.floor((diff / (1000*60)) % 60);
-const seconds = Math.floor((diff / 1000) % 60);
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const minutes = Math.floor((diff / (1000*60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
 
-document.getElementById("counter").innerHTML =
-`Birlikte ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniyedir ❤️`;
+    document.getElementById("counter").innerHTML =
+        `Birlikte ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye ❤️`;
 }
 
 setInterval(updateCounter,1000);
 updateCounter();
 
-function checkName(){
-const input = document.getElementById("nameInput").value.toLowerCase();
-if(input.length > 0){
-document.body.style.animation = "shake 0.5s";
-document.getElementById("hiddenMessage").style.display="block";
+// Uçan kalpler
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = (Math.random()*20 + 15) + "px";
+    heart.style.animationDuration = (Math.random()*3 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{ heart.remove(); },6000);
 }
-}
+
+setInterval(createHeart,300);
 </script>
 
 </body>
