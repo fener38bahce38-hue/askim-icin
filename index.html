@@ -115,6 +115,37 @@ document.getElementById("error").innerText = "Yanlış şifre!";
 }
 
 </script>
+<script>
 
+/* 💖 Renkli uçan kalpler */
+function createHeart(){
+const heart = document.createElement("div");
+heart.innerHTML = "❤";
+heart.style.position = "fixed";
+heart.style.left = Math.random()*100 + "vw";
+heart.style.bottom = "-20px";
+heart.style.fontSize = (Math.random()*20+15) + "px";
+heart.style.animation = "floatUp 6s linear";
+heart.style.color = `hsl(${Math.random()*360}, 100%, 60%)`;
+heart.style.pointerEvents = "none";
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},6000);
+}
+
+setInterval(createHeart,400);
+
+/* Animasyon */
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes floatUp{
+0%{transform:translateY(0); opacity:1;}
+100%{transform:translateY(-110vh); opacity:0;}
+}`;
+document.head.appendChild(style);
+
+</script>
 </body>
 </html>
