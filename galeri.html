@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bizim Anılarımız ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+body{
+background:#111;
+color:white;
+overflow-x:hidden;
+text-align:center;
+padding:30px;
+}
+
+/* Başlık */
+h1{
+margin-bottom:30px;
+font-size:32px;
+}
+
+/* Grid galeri */
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+max-width:1000px;
+margin:auto;
+}
+
+/* Foto kart */
+.card{
+position:relative;
+overflow:hidden;
+border-radius:20px;
+cursor:pointer;
+}
+
+.card img{
+width:100%;
+height:350px;
+object-fit:cover;
+transition:0.5s;
+}
+
+.card:hover img{
+transform:scale(1.1);
+}
+
+/* Üst yazı */
+.overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:flex;
+justify-content:center;
+align-items:center;
+opacity:0;
+transition:0.5s;
+padding:20px;
+text-align:center;
+}
+
+.card.active .overlay{
+opacity:1;
+}
+
+/* Kalpler */
+.heart{
+position:fixed;
+font-size:20px;
+animation:floatUp 6s linear infinite;
+opacity:0.8;
+pointer-events:none;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(100vh) scale(0.5);opacity:1;}
+100%{transform:translateY(-10vh) scale(1.2);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<h1>💖 Bizim En Güzel Anılarımız 💖</h1>
+
+<div class="gallery">
+
+<div class="card" onclick="toggle(this)">
+<img src="1.JPG">
+<div class="overlay">Bu gün hayatımın en mutlu günüydü ❤️</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="2.JPG">
+<div class="overlay">Seninle her yer cennet 💖</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="3.JPG">
+<div class="overlay">Gülüşün dünyamı aydınlatıyor ✨</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="4.JPG">
+<div class="overlay">En güzel anım seninle olan 💕</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="5.jpg">
+<div class="overlay">Her şey seninle anlamlı ❤️</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<img src="6.JPG">
+<div class="overlay">Sonsuza kadar elini bırakmayacağım 💍</div>
+</div>
+
+</div>
+
+<script>
+function toggle(card){
+card.classList.toggle("active");
+}
+
+/* Uçan kalpler */
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+15)+"px";
+heart.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,400);
+</script>
+
+</body>
+</html>
