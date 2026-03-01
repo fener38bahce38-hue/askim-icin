@@ -9,91 +9,66 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 
 body{
-background:#000;
+background:#111;
 color:white;
-overflow:hidden;
+overflow-x:hidden;
 text-align:center;
+padding:30px;
 }
 
-/* Müzik butonu */
-.music-btn{
-position:fixed;
-top:20px;
-right:20px;
-background:white;
-color:#ff2e63;
-border:none;
-padding:10px 15px;
+/* Başlık */
+h1{
+margin-bottom:30px;
+font-size:32px;
+}
+
+/* Grid galeri */
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+max-width:1000px;
+margin:auto;
+}
+
+/* Foto kart */
+.card{
+position:relative;
+overflow:hidden;
 border-radius:20px;
 cursor:pointer;
-z-index:10;
 }
 
-/* Slideshow */
-.slideshow{
-position:relative;
-height:100vh;
+.card img{
 width:100%;
-}
-
-.slide{
-position:absolute;
-width:100%;
-height:100%;
-opacity:0;
-transition:1s;
-}
-
-.slide img{
-width:100%;
-height:100%;
+height:350px;
 object-fit:cover;
+transition:0.5s;
 }
 
-.slide.active{
-opacity:1;
+.card:hover img{
+transform:scale(1.1);
 }
 
-/* Yazı */
-.caption{
+/* Üst yazı */
+.overlay{
 position:absolute;
-bottom:50px;
-width:100%;
-font-size:28px;
-background:rgba(0,0,0,0.5);
-padding:15px;
-}
-
-/* Final ekran */
-.final{
-position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:black;
+background:rgba(0,0,0,0.6);
 display:flex;
 justify-content:center;
 align-items:center;
-flex-direction:column;
-font-size:40px;
 opacity:0;
-visibility:hidden;
-transition:1s;
-z-index:20;
+transition:0.5s;
+padding:20px;
+text-align:center;
 }
 
-.final.show{
+.card.active .overlay{
 opacity:1;
-visibility:visible;
-}
-
-.final button{
-margin-top:20px;
-padding:10px 20px;
-border:none;
-border-radius:20px;
-cursor:pointer;
 }
 
 /* Kalpler */
@@ -114,76 +89,45 @@ pointer-events:none;
 
 <body>
 
-<button class="music-btn" onclick="toggleMusic()">🎵 Müzik</button>
+<h1>💖 Bizim En Güzel Anılarımız 💖</h1>
 
-<audio id="bgMusic" loop>
-<source src="muzik.mp3" type="audio/mpeg">
-</audio>
+<div class="gallery">
 
-<div class="slideshow">
-
-<div class="slide active">
+<div class="card" onclick="toggle(this)">
 <img src="1.JPG">
-<div class="caption">Seninle başlayan en güzel hikaye ❤️</div>
+<div class="overlay">Bu gün hayatımın en mutlu günüydü ❤️</div>
 </div>
 
-<div class="slide">
+<div class="card" onclick="toggle(this)">
 <img src="2.JPG">
-<div class="caption">Her anım seninle anlamlı 💕</div>
+<div class="overlay">Seninle her yer cennet 💖</div>
 </div>
 
-<div class="slide">
+<div class="card" onclick="toggle(this)">
 <img src="3.JPG">
-<div class="caption">Gülüşün dünyamı aydınlatıyor ✨</div>
+<div class="overlay">Gülüşün dünyamı aydınlatıyor ✨</div>
 </div>
 
-<div class="slide">
+<div class="card" onclick="toggle(this)">
 <img src="4.JPG">
-<div class="caption">Kalbim sadece sana ait 💖</div>
+<div class="overlay">En güzel anım seninle olan 💕</div>
 </div>
 
-<div class="slide">
+<div class="card" onclick="toggle(this)">
 <img src="5.jpg">
-<div class="caption">Sonsuza kadar sen 💍 (Buna tıklayınca sürpriz)</div>
+<div class="overlay">Her şey seninle anlamlı ❤️</div>
 </div>
 
+<div class="card" onclick="toggle(this)">
+<img src="6.JPG">
+<div class="overlay">Sonsuza kadar elini bırakmayacağım 💍</div>
 </div>
 
-<div class="final" id="finalScreen">
-💍 Benimle Sonsuza Kadar Var Mısın? 💖
-<button onclick="closeFinal()">Geri Dön</button>
 </div>
 
 <script>
-let slides=document.querySelectorAll(".slide");
-let current=0;
-
-function nextSlide(){
-slides[current].classList.remove("active");
-current=(current+1)%slides.length;
-slides[current].classList.add("active");
-}
-
-setInterval(nextSlide,4000);
-
-/* Son foto tıklanınca */
-slides[slides.length-1].addEventListener("click",()=>{
-document.getElementById("finalScreen").classList.add("show");
-});
-
-/* Final kapatma */
-function closeFinal(){
-document.getElementById("finalScreen").classList.remove("show");
-}
-
-/* Müzik */
-let music=document.getElementById("bgMusic");
-function toggleMusic(){
-if(music.paused){
-music.play();
-}else{
-music.pause();
-}
+function toggle(card){
+card.classList.toggle("active");
 }
 
 /* Uçan kalpler */
@@ -197,7 +141,7 @@ heart.style.animationDuration=(Math.random()*3+3)+"s";
 document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),6000);
 }
-setInterval(createHeart,500);
+setInterval(createHeart,400);
 </script>
 
 </body>
