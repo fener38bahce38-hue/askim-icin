@@ -161,6 +161,14 @@ setTimeout(()=>heart.remove(),6000);
 }
 setInterval(createHeart,400);
 </script>
+<script>
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("musicBtn");
 
+btn.addEventListener("click", () => {
+music.play();
+btn.style.display = "none";
+});
+</script>
 </body>
 </html>
