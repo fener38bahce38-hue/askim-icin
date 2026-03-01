@@ -3,145 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bizim Anılarımız ❤️</title>
+<title>Bizim Hikayemiz ❤️</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 
 body{
-background:#111;
-color:white;
-overflow-x:hidden;
-text-align:center;
-padding:30px;
-}
-
-/* Başlık */
-h1{
-margin-bottom:30px;
-font-size:32px;
-}
-
-/* Grid galeri */
-.gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-max-width:1000px;
-margin:auto;
-}
-
-/* Foto kart */
-.card{
-position:relative;
-overflow:hidden;
-border-radius:20px;
-cursor:pointer;
-}
-
-.card img{
-width:100%;
-height:350px;
-object-fit:cover;
-transition:0.5s;
-}
-
-.card:hover img{
-transform:scale(1.1);
-}
-
-/* Üst yazı */
-.overlay{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.6);
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-opacity:0;
-transition:0.5s;
-padding:20px;
+overflow:hidden;
+color:white;
 text-align:center;
 }
 
-.card.active .overlay{
-opacity:1;
-}
-
-/* Kalpler */
-.heart{
+/* Arka plan */
+.background{
 position:fixed;
-font-size:20px;
-animation:floatUp 6s linear infinite;
-opacity:0.8;
-pointer-events:none;
+width:100%;
+height:100%;
+background:url("askim.jpg") center/cover no-repeat;
+filter:blur(8px) brightness(0.5);
+z-index:-1;
 }
 
-@keyframes floatUp{
-0%{transform:translateY(100vh) scale(0.5);opacity:1;}
-100%{transform:translateY(-10vh) scale(1.2);opacity:0;}
+/* Sayaç alanı */
+.counters{
+position:absolute;
+top:30px;
+width:100%;
+font-size:20px;
+font-weight:bold;
+line-height:1.6;
+}
+
+/* Giriş kutusu */
+.container{
+backdrop-filter:blur(15px);
+background:rgba(255,255,255,0.15);
+padding:40px;
+border-radius:25px;
+box-shadow:0 0 40px rgba(0,0,0,0.4);
+width:320px;
+}
+
+h1{margin-bottom:20px;}
+
+input{
+padding:10px;
+border:none;
+border-radius:10px;
+width:100%;
+margin-top:10px;
+}
+
+button{
+margin-top:15px;
+padding:10px;
+border:none;
+border-radius:20px;
+background:white;
+color:#ff1e56;
+font-weight:bold;
+cursor:pointer;
+width:100%;
+}
+
+button:hover{transform:scale(1.05);}
+
+.shake{animation:shake 0.3s;}
+
+@keyframes shake{
+0%{transform:translateX(0);}
+25%{transform:translateX(-5px);}
+50%{transform:translateX(5px);}
+75%{transform:translateX(-5px);}
+100%{transform:translateX(0);}
 }
 </style>
 </head>
 
 <body>
 
-<h1>💖 Bizim En Güzel Anılarımız 💖</h1>
+<div class="background"></div>
 
-<div class="gallery">
-
-<div class="card" onclick="toggle(this)">
-<img src="1.JPG">
-<div class="overlay">Bu gün hayatımın en mutlu günüydü ❤️</div>
+<!-- 💖 Sayaçlar -->
+<div class="counters">
+<div id="forwardCounter">💞 Birlikte Geçen Süre: Hesaplanıyor...</div>
+<div id="countdown">⏳ Özel Güne Kalan Süre: Hesaplanıyor...</div>
 </div>
 
-<div class="card" onclick="toggle(this)">
-<img src="2.JPG">
-<div class="overlay">Seninle her yer cennet 💖</div>
-</div>
-
-<div class="card" onclick="toggle(this)">
-<img src="3.JPG">
-<div class="overlay">Gülüşün dünyamı aydınlatıyor ✨</div>
-</div>
-
-<div class="card" onclick="toggle(this)">
-<img src="4.JPG">
-<div class="overlay">En güzel anım seninle olan 💕</div>
-</div>
-
-<div class="card" onclick="toggle(this)">
-<img src="5.jpg">
-<div class="overlay">Her şey seninle anlamlı ❤️</div>
-</div>
-
-<div class="card" onclick="toggle(this)">
-<img src="6.JPG">
-<div class="overlay">Sonsuza kadar elini bırakmayacağım 💍</div>
-</div>
-
+<div class="container" id="box">
+<h1>❤️ Gizli Alan ❤️</h1>
+<p>Şifreyi gir aşkım 💖</p>
+<input type="password" id="password" placeholder="Şifre">
+<button onclick="checkPassword()">Giriş Yap</button>
 </div>
 
 <script>
-function toggle(card){
-card.classList.toggle("active");
+
+/* 💞 Tanışma tarihi */
+const startDate = new Date("2025-10-26T00:00:00");
+
+/* 💍 Özel gün tarihi (yıldönümü vs) */
+const specialDate = new Date("2025-10-26T00:00:00");
+
+function updateTimers(){
+
+const now = new Date();
+
+/* İLERİ SAYIM */
+const diffForward = now - startDate;
+
+const d1 = Math.floor(diffForward / (1000*60*60*24));
+const h1 = Math.floor((diffForward / (1000*60*60)) % 24);
+const m1 = Math.floor((diffForward / (1000*60)) % 60);
+const s1 = Math.floor((diffForward / 1000) % 60);
+
+document.getElementById("forwardCounter").innerHTML =
+`💞 Birlikte ${d1} Gün ${h1} Saat ${m1} Dakika ${s1} Saniye`;
+
+
+/* GERİ SAYIM */
+const diffCountdown = specialDate - now;
+
+if(diffCountdown > 0){
+
+const d2 = Math.floor(diffCountdown / (1000*60*60*24));
+const h2 = Math.floor((diffCountdown / (1000*60*60)) % 24);
+const m2 = Math.floor((diffCountdown / (1000*60)) % 60);
+const s2 = Math.floor((diffCountdown / 1000) % 60);
+
+document.getElementById("countdown").innerHTML =
+`⏳ Özel Güne ${d2} Gün ${h2} Saat ${m2} Dakika ${s2} Saniye Kaldı 💖`;
+
+}else{
+document.getElementById("countdown").innerHTML =
+"🎉 BUGÜN ÖZEL GÜNÜMÜZ! SENİ ÇOK SEVİYORUM ❤️";
 }
 
-/* Uçan kalpler */
-function createHeart(){
-const heart=document.createElement("div");
-heart.classList.add("heart");
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*20+15)+"px";
-heart.style.animationDuration=(Math.random()*3+3)+"s";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),6000);
 }
-setInterval(createHeart,400);
+
+setInterval(updateTimers,1000);
+updateTimers();
+
+
+/* Şifre */
+function checkPassword(){
+const pass=document.getElementById("password").value;
+const box=document.getElementById("box");
+
+if(pass==="26102025"){
+window.location.href="galeri.html";
+}else{
+box.classList.add("shake");
+setTimeout(()=>box.classList.remove("shake"),300);
+}
+}
 </script>
 
 </body>
